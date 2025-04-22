@@ -7,5 +7,3 @@ API_URL = os.getenv("API_URL")
 API_KEY = os.getenv("API_KEY")
 
 contacts = get_contacts(API_URL, API_KEY, 0)
-
-print(len(contacts))
