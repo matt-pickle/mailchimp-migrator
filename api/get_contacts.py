@@ -16,5 +16,6 @@ def get_contacts(API_URL, API_KEY, offset):
       return get_contacts(API_URL, API_KEY, next_offset)
   except requests.exceptions.RequestException as e:
     print(f"Error getting contacts: {e}")
+
   print(f"Total contacts retrieved: {len(contacts)}")
   return contacts
