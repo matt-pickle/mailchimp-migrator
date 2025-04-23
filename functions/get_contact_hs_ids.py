@@ -29,15 +29,14 @@ def get_contact_hs_ids(PRIVATE_APP_KEY, contact_ids):
 
     try:
       response = requests.post(url, headers=headers, json=data)
-    except requests.exceptions.RequestException as e:
-      print(f"Error getting contact IDs: {e}")
-    else:
+      response.raise_for_status()
       json_response = response.json()
-      print("json_response", json_response)
       print(f"Retrieved contacts: {len(json_response['results'])}")
       these_ids = [contact["id"] for contact in json_response["results"]]
       contact_ids.extend(these_ids)
-    
+    except requests.exceptions.RequestException as e:
+      print(f"Error getting contact IDs: {e}")
+
     time.sleep(0.25)
 
   print(f"Total contact IDs retrieved: {len(contact_ids)}")

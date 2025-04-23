@@ -10,15 +10,15 @@ def get_contacts_in_list(API_URL, API_KEY, list_id):
     
   try:
     response = requests.get(url, headers=headers)
-  except requests.exceptions.RequestException as e:
-    print(f"Error getting members from list {list_id}: {e}")
-  else:
+    response.raise_for_status()
     json_response = response.json()
     print(f"Retrieved list members: {len(json_response['members'])}")
     if json_response["page"] <= json_response["pages"]:
       contacts.extend(json_response["members"])
       offset = json_response["page"] * json_response["size"]
       return get_contacts_in_list(API_URL, API_KEY, list_id)
+  except requests.exceptions.RequestException as e:
+    print(f"Error getting members from list {list_id}: {e}")
 
   print(f"Total members retrieved for list {list_id}: {len(contacts)}")
   return contacts

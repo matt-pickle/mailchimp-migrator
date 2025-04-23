@@ -9,10 +9,10 @@ def add_contacts_to_list(PRIVATE_APP_KEY, list_hs_id, contact_hs_ids):
     data = contact_hs_ids[i:i+100]
     try:
       response = requests.put(url, headers=headers, json=data)
-    except requests.exceptions.RequestException as e:
-      print(f"Error adding Contacts to List: {e}")
-    else:
+      response.raise_for_status()
       json_response = response.json()
       print(f"Contacts added to List: {len(json_response['recordIdsAdded'])}")
+    except requests.exceptions.RequestException as e:
+      print(f"Error adding Contacts to List: {e}")
     
     time.sleep(0.25)

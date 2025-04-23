@@ -14,11 +14,11 @@ def create_hubspot_list(PRIVATE_APP_KEY, list):
   }
   try:
     response = requests.post(url, headers=headers, json=data)
-  except requests.exceptions.RequestException as e:
-    print(f"Error creating list: {e}")
-  else:
+    response.raise_for_status()
     json_response = response.json()
     print(f"Created list: {json_response['id']}")
     list_hs_id = json_response["id"]  
-    
+  except requests.exceptions.RequestException as e:
+    print(f"Error creating list: {e}")
+
   return list_hs_id
