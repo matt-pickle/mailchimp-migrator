@@ -15,6 +15,6 @@ lists = get_lists(API_URL, API_KEY, 0)
 for list in lists:
   contacts = get_contacts_in_list(API_URL, API_KEY, list["id"], 0)
   contact_hs_ids = get_contact_hs_ids(PRIVATE_APP_KEY, contacts)
-  create_hubspot_list(PRIVATE_APP_KEY, list["name"], contact_hs_ids)
+  list_hs_id = create_hubspot_list(PRIVATE_APP_KEY, list)
 
 
