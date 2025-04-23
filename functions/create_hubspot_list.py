@@ -8,11 +8,11 @@ def create_hubspot_list(PRIVATE_APP_KEY, list):
     "objectTypeId": "0-1",
     "processingType": "MANUAL",
     "name": list["name"],
-    "properties": {
+    "customProperties": {
       "mailchimp_id": list["id"]
     }
   }
-  print(data)
+
   try:
     response = requests.post(url, headers=headers, json=data)
     response.raise_for_status()
