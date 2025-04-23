@@ -11,11 +11,12 @@ API_URL = os.getenv("API_URL")
 API_KEY = os.getenv("API_KEY")
 PRIVATE_APP_KEY = os.getenv("PRIVATE_APP_KEY")
 
-lists = get_lists(API_URL, API_KEY, 0)
+lists = get_lists(API_URL, API_KEY)
 
 for list in lists:
-  contacts = get_contacts_in_list(API_URL, API_KEY, list["id"], 0)
-  contact_hs_ids = get_contact_hs_ids(PRIVATE_APP_KEY, contacts)
+  contacts = get_contacts_in_list(API_URL, API_KEY, list["id"])
+  contact_ids = [contact["id"] for contact in contacts]
+  contact_hs_ids = get_contact_hs_ids(PRIVATE_APP_KEY, contact_ids)
   list_hs_id = create_hubspot_list(PRIVATE_APP_KEY, list)
   add_contacts_to_list(PRIVATE_APP_KEY, list_hs_id, contact_hs_ids)
 
