@@ -16,7 +16,7 @@ def get_contact_hs_ids(PRIVATE_APP_KEY, contact_ids):
             {
               "values": batch,
               "propertyName": "mailchimp_id",
-              "operator": "EQUAL"
+              "operator": "IN"
             }
           ]
         }
@@ -29,14 +29,16 @@ def get_contact_hs_ids(PRIVATE_APP_KEY, contact_ids):
 
     try:
       response = requests.post(url, headers=headers, json=data)
-      json_response = response.json()
-      print(f"Retrieved contacts: {len(json_response['contacts'])}")
-      these_ids = map(lambda x: x["id"], json_response["results"])
-      contact_ids.extend(these_ids)
     except requests.exceptions.RequestException as e:
-      print(f"Error getting contacts IDs: {e}")
+      print(f"Error getting contact IDs: {e}")
+    else:
+      json_response = response.json()
+      print("json_response", json_response)
+      print(f"Retrieved contacts: {len(json_response['results'])}")
+      these_ids = [contact["id"] for contact in json_response["results"]]
+      contact_ids.extend(these_ids)
     
     time.sleep(0.25)
 
-  print(f"Total contacts IDs retrieved: {len(contact_ids)}")
+  print(f"Total contact IDs retrieved: {len(contact_ids)}")
   return contact_ids
