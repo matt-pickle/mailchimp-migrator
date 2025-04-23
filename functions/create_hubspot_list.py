@@ -8,16 +8,17 @@ def create_hubspot_list(PRIVATE_APP_KEY, list):
     "objectTypeId": "0-1",
     "processingType": "MANUAL",
     "name": list["name"],
-    "customProperties": {
+    "properties": {
       "mailchimp_id": list["id"]
     }
   }
+  print(data)
   try:
     response = requests.post(url, headers=headers, json=data)
     response.raise_for_status()
     json_response = response.json()
-    print(f"Created list: {json_response['id']}")
-    list_hs_id = json_response["id"]  
+    print(f"Created list: {json_response["list"]["listId"]}")
+    list_hs_id = json_response["list"]["listId"]
   except requests.exceptions.RequestException as e:
     print(f"Error creating list: {e}")
 
