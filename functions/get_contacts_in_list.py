@@ -13,8 +13,8 @@ def get_contacts_in_list(API_URL, API_KEY, list_id):
     response.raise_for_status()
     json_response = response.json()
     print(f"Retrieved list members: {len(json_response['members'])}")
-    if json_response["page"] <= json_response["pages"]:
-      contacts.extend(json_response["members"])
+    contacts.extend(json_response["members"])
+    if json_response["page"] < json_response["pages"]:
       offset = json_response["page"] * json_response["size"]
       return get_contacts_in_list(API_URL, API_KEY, list_id)
   except requests.exceptions.RequestException as e:
