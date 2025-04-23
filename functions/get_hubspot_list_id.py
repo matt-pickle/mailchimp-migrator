@@ -9,9 +9,9 @@ def get_hubspot_list_id(PRIVATE_APP_KEY, list_id):
         {
           "filters": [
             {
-              "values": list_id,
+              "value": list_id,
               "propertyName": "mailchimp_id",
-              "operator": "IN"
+              "operator": "EQ"
             }
           ]
         }
