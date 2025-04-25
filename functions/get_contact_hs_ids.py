@@ -1,11 +1,10 @@
 import requests
 import time
 
-contact_hs_ids = []
-
 def get_contact_hs_ids(PRIVATE_APP_KEY, contact_ids):
   url = "https://api.hubapi.com/crm/v3/objects/contacts/search"
   headers = { "Authorization": f"Bearer {PRIVATE_APP_KEY}", "Content-Type": "application/json"}
+  contact_hs_ids = []
 
   for i in range(0, len(contact_ids), 100):
     batch = contact_ids[i:i+100]
