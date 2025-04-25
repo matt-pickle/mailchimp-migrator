@@ -11,7 +11,10 @@ def add_contacts_to_list(PRIVATE_APP_KEY, list_hs_id, contact_hs_ids):
       response = requests.put(url, headers=headers, json=data)
       response.raise_for_status()
       json_response = response.json()
-      print(f"Contacts added to List: {len(json_response['recordIdsAdded'])}")
+      if "recordsIdsAdded" in json_response:
+        print(f"Contacts added to List: {len(json_response['recordsIdsAdded'])}")
+      else:
+        print(f"All Contacts in this batch are already in List")
     except requests.exceptions.RequestException as e:
       print(f"Error adding Contacts to List: {e}")
     
