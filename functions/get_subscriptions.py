@@ -1,10 +1,9 @@
 import requests
 
-offset = 0
-subscriptions = []
-
-def get_subscriptions(API_URL, API_KEY):
-  global offset
+def get_subscriptions(API_URL, API_KEY, offset=0, subscriptions=None):
+  if subscriptions is None:
+    subscriptions = []
+    
   url = f"{API_URL}/api/v1/subscriptions?offset={offset}"
   headers = { "apiKey": API_KEY}
     
@@ -15,8 +14,8 @@ def get_subscriptions(API_URL, API_KEY):
     print(f"Retrieved MailChimp subscriptions: {len(json_response['subscriptions'])}")
     subscriptions.extend(json_response["subscriptions"])
     if json_response["page"] < json_response["pages"]:
-      offset = json_response["page"] * json_response["size"]
-      return get_subscriptions(API_URL, API_KEY)  
+      new_offset = json_response["page"] * json_response["size"]
+      return get_subscriptions(API_URL, API_KEY, new_offset, subscriptions)  
   except requests.exceptions.RequestException as e:
     print(f"Error getting MailChimp subscriptions: {e}")
 

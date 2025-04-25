@@ -1,10 +1,9 @@
 import requests
 
-offset = 0
-lists = []
-
-def get_lists(API_URL, API_KEY):
-  global offset
+def get_lists(API_URL, API_KEY, offset=0, lists=None):
+  if lists is None:
+    lists = []
+  
   url = f"{API_URL}/api/v1/lists?offset={offset}"
   headers = { "apiKey": API_KEY}
     
@@ -15,8 +14,8 @@ def get_lists(API_URL, API_KEY):
     print(f"Retrieved lists: {len(json_response['lists'])}")
     lists.extend(json_response["lists"])
     if json_response["page"] < json_response["pages"]:
-      offset = json_response["page"] * json_response["size"]
-      return get_lists(API_URL, API_KEY)  
+      new_offset = json_response["page"] * json_response["size"]
+      return get_lists(API_URL, API_KEY, new_offset, lists)  
   except requests.exceptions.RequestException as e:
     print(f"Error getting lists: {e}")
 
