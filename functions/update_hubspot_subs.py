@@ -19,7 +19,7 @@ def update_hubspot_subs(PRIVATE_APP_KEY, subscriptions):
     }
 
     try:
-      response = requests.put(url, headers=headers, json=data)
+      response = requests.post(url, headers=headers, json=data)
       response.raise_for_status()
       json_response = response.json()
       print(f"Email subscriptions updated: {len(json_response['results'])}")
