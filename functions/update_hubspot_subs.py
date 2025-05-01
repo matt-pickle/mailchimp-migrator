@@ -8,10 +8,10 @@ def update_hubspot_subs(PRIVATE_APP_KEY, subscriptions):
   for i in range(0, len(subscriptions), 100):
     inputs = [
       {
-        "statusState": subscription["status"],
-        "channel": "EMAIL",
-        "subscriberIdString": subscription["email"],
-        "subscriptionId": subscription["subscription_hs_id"]
+      "statusState": subscription["status"].upper(),
+      "channel": "EMAIL",
+      "subscriberIdString": subscription["email"],
+      "subscriptionId": subscription["subscription_hs_id"]
       } for subscription in subscriptions[i:i+100]
     ]
     data = {
