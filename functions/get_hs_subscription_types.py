@@ -10,7 +10,7 @@ def get_hs_subscription_types(PRIVATE_APP_KEY):
     response.raise_for_status()
     json_response = response.json()
     print(f"Retrieved HubSpot Subscription Types: {len(json_response['results'])}")
-    hs_subscription_types = len(json_response['results'])
+    hs_subscription_types = json_response['results']
   except requests.exceptions.RequestException as e:
     print(f"Error retrieving HubSpot Subscription Types: {e}")
 
