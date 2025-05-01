@@ -25,7 +25,7 @@ for subscription in subscriptions:
 for subscription in subscriptions:
   for contact in contacts:
     if subscription["contact_id"] == contact["id"]:
-      subscription["email"] = contact["email"]
+      subscription["email"] = contact.get("email")
       break
 
 # Remove subscriptions with no email or subscription type ID
